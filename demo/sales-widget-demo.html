@@ -1,6 +1,16 @@
 <!doctype html>
 <meta charset="utf-8">
 <title>Marisol Vega — Mobile Dog Grooming</title>
+<script>
+  // Mobile preview loads this same file in an iframe with ?embed=1, which
+  // hides the sales toolbar and its gray backdrop — real @media breakpoints
+  // in this page (not container queries) only respond to an actual viewport,
+  // so a device-frame div alone wouldn't trigger mobile layout; a same-file
+  // iframe gives the page a genuinely narrow viewport instead.
+  if(/[?&]embed=1(&|$)/.test(location.search)){
+    document.documentElement.classList.add('is-embed');
+  }
+</script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -568,6 +578,18 @@
   .st-reset{border:none; background:none; font-size:11px; font-weight:600; color:#9AA1AC; padding:4px 2px; flex:none; text-decoration:underline; cursor:pointer}
   .st-reset:hover{color:#fff}
   .st-note{margin-left:auto; font-size:11.5px; color:#8A8F98; white-space:nowrap; flex:none; max-width:420px; overflow:hidden; text-overflow:ellipsis}
+
+  /* Mobile preview: a phone-shaped frame holding an iframed copy of this same
+     page at a real 390px viewport, so its own @media breakpoints fire
+     genuinely rather than being faked with a resized container. */
+  .vp-hidden{ display:none !important }
+  .vp-mobile-wrap{ display:flex; justify-content:center; padding:24px 12px 44px; background:#E4E4E2; }
+  .vp-mobile-frame{
+    width:390px; height:min(844px,80vh); border-radius:38px; border:10px solid #14161A;
+    box-shadow:0 20px 50px rgba(0,0,0,.28); overflow:hidden; background:#fff; flex:none;
+  }
+  .vp-mobile-frame iframe{ width:100%; height:100%; border:none; display:block }
+  html.is-embed .sales-toolbar{ display:none }
 </style>
 
 <div class="sales-toolbar">
@@ -586,9 +608,18 @@
     <input type="text" id="accentHex" class="st-hex-input" value="#0BB8C9" maxlength="7" spellcheck="false" autocomplete="off" aria-label="Widget accent color hex code">
     <button type="button" id="accentReset" class="st-reset">Reset</button>
   </div>
+  <div class="st-divider"></div>
+  <div class="st-group">
+    <span class="st-label">Viewport</span>
+    <div class="st-switch" id="viewportSwitcher">
+      <button data-viewport="mobile">Mobile</button>
+      <button data-viewport="desktop" class="active">Desktop</button>
+    </div>
+  </div>
   <span class="st-note">Pick a style, then type any hex to override its accent on the widget only — the site around it is a fixed example.</span>
 </div>
 
+<div id="vpDesktop">
 <div class="mv-page">
 
   <header class="mv-header">
@@ -1049,6 +1080,13 @@
     <p>&copy; 2026 Marisol Vega. All rights reserved.</p>
   </footer>
 
+</div>
+</div>
+
+<div id="vpMobile" class="vp-mobile-wrap vp-hidden">
+  <div class="vp-mobile-frame">
+    <iframe id="mobileFrame" title="Mobile preview"></iframe>
+  </div>
 </div>
 
 <script>
@@ -1819,6 +1857,33 @@
     widget.setAttribute('data-style', btn.getAttribute('data-style'));
     Array.prototype.forEach.call(switcher.querySelectorAll('button'), function(b){ b.classList.toggle('active', b===btn); });
     syncAccentControlsToPreset(btn.getAttribute('data-style'));
+  });
+
+  // Viewport toggle — Desktop shows the page inline as normal; Mobile loads
+  // this same file into an iframe (lazily, on first switch) at a real 390px
+  // width so the page's own @media breakpoints render true mobile layout,
+  // rather than just squeezing a resized box.
+  var viewportSwitcher = document.getElementById('viewportSwitcher');
+  var vpDesktop = document.getElementById('vpDesktop');
+  var vpMobile = document.getElementById('vpMobile');
+  var mobileFrame = document.getElementById('mobileFrame');
+  var mobileFrameLoaded = false;
+  viewportSwitcher.addEventListener('click', function(e){
+    var btn = e.target.closest('button');
+    if(!btn) return;
+    Array.prototype.forEach.call(viewportSwitcher.querySelectorAll('button'), function(b){ b.classList.toggle('active', b===btn); });
+    var vp = btn.getAttribute('data-viewport');
+    if(vp === 'mobile'){
+      vpDesktop.classList.add('vp-hidden');
+      vpMobile.classList.remove('vp-hidden');
+      if(!mobileFrameLoaded){
+        mobileFrameLoaded = true;
+        mobileFrame.src = location.pathname + (location.search ? location.search + '&' : '?') + 'embed=1';
+      }
+    } else {
+      vpMobile.classList.add('vp-hidden');
+      vpDesktop.classList.remove('vp-hidden');
+    }
   });
 
   goToStep(1);
