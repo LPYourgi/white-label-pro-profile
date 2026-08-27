@@ -125,7 +125,8 @@ Sellers pitch pros using **[`demo/sales-widget-demo.html`](../demo/sales-widget-
 - **Widget style toggle:** Earthy / Modern / Luxury, same three presets as everywhere else in this project.
 - **Accent color hex override:** a seller can type any hex code to preview a pro's own brand color live on top of whichever style preset is active. Scoped to the booking widget only — the surrounding page's own accent (hero CTA, etc.) stays fixed as a backdrop example, per explicit instruction not to tie the two together.
 - **Placement:** "Book Now" always opens the flow as a popup, matching the current standing rule above. There is no inline mode and no placement toggle in this file.
-- **What's deliberately not here:** a viewport toggle (the page is genuinely responsive — resize the browser instead of simulating a device frame) and QA-only affordances like widget-unavailable/page-deactivated states (out of place in front of a pro).
+- **Viewport toggle (added 2026-08-27):** Mobile/Desktop, next to the style and accent controls. Mobile mode loads this same file into a phone-shaped iframe with `?embed=1` appended, which hides the toolbar for that inner load — necessary because the page's real `@media` breakpoints only respond to an actual browser viewport, so a resized container div alone wouldn't have triggered true mobile layout.
+- **What's deliberately not here:** QA-only affordances like widget-unavailable/page-deactivated states (out of place in front of a pro).
 - **Fixed 2026-08-27:** the widget's identity header, login copy, confirmation card, and both fallback states originally still showed "BARK! Denver" name/initials/phone/email, carried over from the Marisol Vega source — replaced with Marisol Vega's own identity (placeholder phone/email, since the source never defined one).
 
 ---

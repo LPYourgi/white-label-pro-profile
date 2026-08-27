@@ -31,9 +31,12 @@ in a browser (no server needed).
   overrides it on top of whichever style is active. The override applies to
   the booking widget only — the surrounding page's own accent (hero CTA, etc.)
   is a fixed example and does not change. "Book Now" always opens the booking
-  flow as a popup (matches the standing placement decision below). This file
-  has no viewport toggle (the page is genuinely responsive — resize the
-  window instead of simulating a device frame). The older BARK! Denver-based
+  flow as a popup (matches the standing placement decision below). A
+  **Viewport** toggle (Mobile/Desktop) switches between the normal inline
+  page and a phone-shaped frame that loads this same file into an iframe with
+  `?embed=1` (hides the toolbar for that inner load) — a real ~390px
+  viewport, not a resized container, since the page's `@media` breakpoints
+  only respond to an actual viewport. The older BARK! Denver-based
   comp (device-frame toolbar, Widget/Page QA toggles) was an earlier,
   since-superseded source for this file — don't resurrect it as the basis for
   sales-demo edits. The claude.ai-hosted "Inline Book Widget" and "Marisol
