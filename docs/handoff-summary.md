@@ -39,9 +39,9 @@ Pros won't drive traffic to their marketplace profile because a visitor there ca
 - **Launch scope** — whether every existing Pro is eligible at launch or this rolls out to a subset first.
 - **Add-ons step** in the booking widget is a speculative interpretation (BARK's live profile has no Add-Ons category today) — flag before treating as confirmed behavior.
 
-## Known bug (pre-existing, not introduced by this work)
+## Fixed since first drafted
 
-The Marisol Vega source's booking-unavailable fallback state still shows "BARK! Denver" copy and phone number instead of Marisol Vega's own — carried over from whatever that artifact was cloned from. Flag before this ships anywhere real.
+The Marisol Vega source's widget originally showed "BARK! Denver" name/initials/phone/email throughout (identity header, login copy, confirmation card, both fallback states) — a leftover from whatever that artifact was cloned from. Fixed 2026-08-27 in `demo/sales-widget-demo.html`; not yet fixed in the Marisol Vega claude.ai artifact itself if that's edited separately.
 
 ## Cleaned up
 

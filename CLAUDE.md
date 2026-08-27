@@ -39,10 +39,11 @@ in a browser (no server needed).
   sales-demo edits. The claude.ai-hosted "Inline Book Widget" and "Marisol
   Vega" artifacts remain separate internal comps and are not this file — don't
   conflate them or assume edits to one apply to the other.
-  **Known pre-existing bug carried over from the Marisol Vega source, not
-  introduced here:** the widget's fallback/unavailable state still shows
-  "BARK! Denver" copy and a BARK phone number (`tel:+13035550187`) instead of
-  Marisol Vega's own — flag before this ships anywhere real.
+  **Fixed 2026-08-27:** the widget's identity header, login copy, confirmation
+  card, and both fallback states originally still showed "BARK! Denver"
+  name/initials/phone/email, carried over from the Marisol Vega source —
+  replaced with Marisol Vega's own identity (placeholder phone/email, since
+  the source never defined one).
 
 ## Conventions
 
